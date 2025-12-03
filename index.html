@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -47,13 +46,17 @@ img { width:80px; height:80px; }
 const letters=[];
 for(let i=65;i<=90;i++){
     let c=String.fromCharCode(i);
-    letters.push({char:c, image:"images/letters/"+c.toLowerCase()+".png", sound:"sounds/letters/"+c.toLowerCase()+".mp3"});
+    letters.push({
+        char:c,
+        image:"static/images/letters/"+c.toLowerCase()+".png",
+        sound:"static/sounds/letters/"+c.toLowerCase()+".mp3"
+    });
 }
 const lettersDiv=document.getElementById("letters");
 letters.forEach(l=>{
     let box=document.createElement("div");
     box.className="item-box";
-    box.innerHTML=`<h3>${l.char}</h3><img src="static/${l.image}">`;
+    box.innerHTML=`<h3>${l.char}</h3><img src="${l.image}">`;
     box.onclick=()=>playSound(l.sound);
     lettersDiv.appendChild(box);
 });
@@ -61,13 +64,17 @@ letters.forEach(l=>{
 // ===== Numbers 1-99 =====
 const numbers=[];
 for(let i=1;i<=99;i++){
-    numbers.push({num:i, image:"images/numbers/"+i+".png", sound:"sounds/numbers/"+i+".mp3"});
+    numbers.push({
+        num:i,
+        image:"static/images/numbers/"+i+".png",
+        sound:"static/sounds/numbers/"+i+".mp3"
+    });
 }
 const numbersDiv=document.getElementById("numbers");
 numbers.forEach(n=>{
     let box=document.createElement("div");
     box.className="item-box";
-    box.innerHTML=`<h3>${n.num}</h3><img src="static/${n.image}">`;
+    box.innerHTML=`<h3>${n.num}</h3><img src="${n.image}">`;
     box.onclick=()=>playSound(n.sound);
     numbersDiv.appendChild(box);
 });
@@ -82,16 +89,14 @@ const sampleWords = {
     "B2":["économie","politique","démocratie","république","parlement","loi","justice","élection","vote","parti","gouvernement","ministre","président","débat","politicien","budget","finance","impôt","taxe","entreprise","industrie","commerce","exportation","importation","marché","consommateur","production","emploi","chômage","salarié","syndicat","contrat","travail","salaire","formation","recherche","innovation","technologie","environnement","écologie","climat","pollution","énergie","renouvelable","transport","mobilité","ville","campagne","culture","art","musique","cinéma"]
 };
 
-// ملأ الكلمات مع ملفات وهمية
+// === ملأ الكلمات بالملفات الحقيقية ===
 ["A1","A2","B1","B2"].forEach(level=>{
-    for(let i=0;i<50;i++){
-        words[level].push({
-            word: sampleWords[level][i],
-            image: "static/images/words/"+level.toLowerCase()+"_"+(i+1)+".png",
-            sound: "static/sounds/words/"+level.toLowerCase()+"_"+(i+1)+".mp3",
-            phrase: "Voici le mot "+sampleWords[level][i]
-        });
-    }
+    words[level] = sampleWords[level].map(word => ({
+        word: word,
+        image: "static/images/words/" + word + ".png",
+        sound: "static/sounds/words/" + word + ".mp3",
+        phrase: "Voici le mot " + word
+    }));
 });
 
 const wordsContainer=document.getElementById("words-container");
@@ -103,7 +108,7 @@ for(const level in words){
     words[level].forEach(w=>{
         let box=document.createElement("div");
         box.className="item-box";
-        box.innerHTML=`<h3>${w.word}</h3><img src="static/${w.image}">`;
+        box.innerHTML=`<h3>${w.word}</h3><img src="${w.image}">`;
         box.onclick=()=>playSound(w.sound);
         wordsContainer.appendChild(box);
     });
@@ -129,7 +134,7 @@ function startGame(){
 // ===== Audio =====
 function playSound(file){
     const audio=document.getElementById("audio");
-    audio.src="static/"+file;
+    audio.src=file;
     audio.play();
 }
 
