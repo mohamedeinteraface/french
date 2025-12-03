@@ -1,0 +1,93 @@
+body {
+    margin: 0;
+    font-family: "Cairo", sans-serif;
+    background: #f9f9f9;
+    color: #222;
+}
+
+/* Header */
+header {
+    background: #003366;
+    color: #fff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+header nav a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+header nav a:hover {
+    color: #ffdd66;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(to bottom, #005b99, #003d66);
+    color: white;
+}
+
+.hero .btn {
+    background: #ffdd66;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 6px;
+    color: black;
+    font-weight: bold;
+}
+
+.hero .btn:hover {
+    background: #ffcc33;
+}
+
+/* Levels */
+.levels {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.level-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    width: 220px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.card h3 {
+    color: #003d66;
+    font-size: 24px;
+}
+
+footer {
+    background: #003366;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 40px;
+}
