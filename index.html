@@ -83,16 +83,16 @@ const sampleWords = {
 };
 
 // ملأ الكلمات مع ملفات وهمية
-// --- ملأ الكلمات بالملفات الصحيحة ---
 ["A1","A2","B1","B2"].forEach(level=>{
-    words[level] = sampleWords[level].map(word => ({
-        word: word,
-        image: "images/words/" + word + ".png",
-        sound: "sounds/words/" + word + ".mp3",
-        phrase: "Voici le mot " + word
-    }));
+    for(let i=0;i<50;i++){
+        words[level].push({
+            word: sampleWords[level][i],
+            image: "images/words/"+level.toLowerCase()+"_"+(i+1)+".png",
+            sound: "sounds/words/"+level.toLowerCase()+"_"+(i+1)+".mp3",
+            phrase: "Voici le mot "+sampleWords[level][i]
+        });
+    }
 });
-
 
 const wordsContainer=document.getElementById("words-container");
 for(const level in words){
