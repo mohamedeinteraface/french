@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Apprentissage complet pour enfants</title>
+
+<style>
+body {
+    font-family: "Comic Sans MS", cursive;
+    text-align: center;
+    background: #fffbf0;
+    margin: 0;
+}
+h1 { color: #ff6f61; margin-top: 20px; }
+.menu { margin: 20px 0; }
+.button {
+    display: inline-block;
+    margin: 10px;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 15px;
+    background: #ffd9c0;
+    color: #333;
+    text-decoration: none;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: 0.2s;
+}
+.button:hover { transform: scale(1.1); background: #ffb380; }
+.section { display: none; padding: 20px; }
+.active { display: block; }
+.item-box {
+    display: inline-block;
+    margin: 10px;
+    padding: 15px;
+    background: #fff7f0;
+    border-radius: 15px;
+    width: 120px;
+    cursor: pointer;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    transition: 0.2s;
+}
+.item-box:hover { transform: scale(1.1); }
+img { width: 80px; height: 80px; }
+.level-title {
+    font-size: 22px;
+    background: #ffb38a;
+    color: white;
+    padding: 8px;
+    border-radius: 10px;
+    width: 200px;
+    margin: 25px auto 10px auto;
+}
+.game-box {
+    margin: 20px auto;
+    padding: 10px;
+    border: 2px dashed #ffb380;
+    border-radius: 15px;
+    width: 300px;
+    background: #fff8f0;
+}
+</style>
+</head>
+<body>
+
+<h1>👶 Apprentissage complet (Lettres • Chiffres • Mots)</h1>
+
+<div class="menu">
+    <button class="button" onclick="showSection('home')">Accueil</button>
+    <button class="button" onclick="showSection('letters')">Lettres 📖</button>
+    <button class="button" onclick="showSection('numbers')">Chiffres 🔢</button>
+    <button class="button" onclick="showSection('words')">Mots 🧠</button>
+    <button class="button" onclick="showSection('games')">Jeux 🎲</button>
+</div>
+
+<div id="home" class="section active">
+    <h2>Bienvenue ! Choisissez une section pour commencer l'apprentissage.</h2>
+</div>
+
+<div id="letters" class="section"><h2>📖 Lettres</h2></div>
+<div id="numbers" class="section"><h2>🔢 Chiffres</h2></div>
+<div id="words" class="section"><h2>🧠 Mots par niveaux</h2><div id="words-container"></div></div>
+<div id="games" class="section"><h2>🎲 Jeux éducatifs</h2>
+    <div class="game-box">
+        <p>Associe la bonne image au mot !</p>
+        <button onclick="startGame()">Commencer</button>
+        <div id="game-area"></div>
+    </div>
+</div>
+
+<audio id="audio"></audio>
+
+<script>
+// ========== Lettres ==========
+const letters = [];
+for(let i=65;i<=90;i++){
+    let c = String.fromCharCode(i);
+    letters.push({char:c, image:"letters/"+c.toLowerCase()+".png", sound:"letters/"+c.toLowerCase()+".mp3"});
+}
+const lettersDiv=document.getElementById("letters");
+letters.forEach(l=>{
+    let box=document.createElement("div");
+    box.className="item-box";
+    box.innerHTML=`<h3>${l.char}</h3><img src="static/images/${l.image}">`;
+    box.onclick=()=>playSound(l.sound);
+    lettersDiv.appendChild(box);
+});
+
+// ========== Numbers ==========
+const numbers=[];
+for(let i=1;i<=99;i++){
+    numbers.push({num:i, image:"numbers/"+i+".png", sound:"numbers/"+i+".mp3"});
+}
+const numbersDiv=document.getElementById("numbers");
+numbers.forEach(n=>{
+    let box=document.createElement("div");
+    box.className="item-box";
+    box.innerHTML=`<h3>${n.num}</h3><img src="static/images/${n.image}">`;
+    box.onclick=()=>playSound(n.sound);
+    numbersDiv.appendChild(box);
+});
+
+// ========== Words 50 par niveau ==========
+const words={
+    "A1":[], "A2":[], "B1":[], "B2":[]
+};
+// Génération automatique de 50 mots factices par niveau
+["A1","A2","B1","B2"].forEach(level=>{
+    for(let i=1;i<=50;i++){
+        words[level].push({
+            word: level+"mot"+i,
+            image: "words/"+level.toLowerCase()+"_"+i+".png",
+            sound: "words/"+level.toLowerCase()+"_"+i+".mp3",
+            phrase: "Ceci est le mot "+level+" mot"+i
+        });
+    }
+});
+const wordsContainer=document.getElementById("words-container");
+for(const level in words){
+    let title=document.createElement("div");
+    title.className="level-title";
+    title.textContent="Niveau "+level;
+    wordsContainer.appendChild(title);
+    words[level].forEach(w=>{
+        let box=document.createElement("div");
+        box.className="item-box";
+        box.innerHTML=`<h3>${w.word}</h3><img src="static/images/${w.image}">`;
+        box.onclick=()=>playSound(w.sound);
+        wordsContainer.appendChild(box);
+    });
+}
+
+// ========== Jeux simples ==========
+function startGame(){
+    const gameArea=document.getElementById("game-area");
+    gameArea.innerHTML="";
+    let sample=words["A1"].slice(0,5);
+    sample.forEach((w,i)=>{
+        let btn=document.createElement("button");
+        btn.textContent=w.word;
+        btn.style.margin="5px";
+        btn.onclick=()=>{
+            alert("Bonne réponse !\nPhrase: "+w.phrase);
+            playSound(w.sound);
+        };
+        gameArea.appendChild(btn);
+    });
+}
+
+// ========== Fonction audio ==========
+function playSound(file){
+    const audio=document.getElementById("audio");
+    audio.src="static/sounds/"+file;
+    audio.play();
+}
+
+// ========== Sections ==========
+function showSection(id){
+    document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
+</script>
+
+</body>
+</html>
