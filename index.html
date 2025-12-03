@@ -2,9 +2,9 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Apprentissage français complet</title>
+<title>Apprentissage Français</title>
 <style>
-body { font-family:"Comic Sans MS", cursive; text-align:center; background:#fffbf0; margin:0; }
+body { font-family:"Comic Sans MS", cursive; text-align:center; background:#fff8f0; margin:0; }
 h1 { color:#ff6f61; margin-top:20px; }
 .button { display:inline-block; margin:10px; padding:15px 30px; font-size:18px; font-weight:bold; border-radius:15px; background:#ffd9c0; color:#333; cursor:pointer; transition:0.2s; }
 .button:hover { transform:scale(1.1); background:#ffb380; }
@@ -19,7 +19,7 @@ img { width:80px; height:80px; }
 </head>
 <body>
 
-<h1>👶 Apprentissage français (Lettres • Chiffres • Mots)</h1>
+<h1>👶 Apprentissage Français</h1>
 
 <div>
 <button class="button" onclick="showSection('letters')">Lettres 📖</button>
@@ -31,7 +31,13 @@ img { width:80px; height:80px; }
 <div id="letters" class="section"><h2>📖 Lettres</h2></div>
 <div id="numbers" class="section"><h2>🔢 Chiffres</h2></div>
 <div id="words" class="section"><h2>🧠 Mots par niveaux</h2><div id="words-container"></div></div>
-<div id="games" class="section"><h2>🎲 Jeux éducatifs</h2><div class="game-box"><p>Associe la bonne image au mot !</p><button onclick="startGame()">Commencer</button><div id="game-area"></div></div></div>
+<div id="games" class="section"><h2>🎲 Jeux éducatifs</h2>
+<div class="game-box">
+<p>Associe la bonne image au mot !</p>
+<button onclick="startGame()">Commencer</button>
+<div id="game-area"></div>
+</div>
+</div>
 
 <audio id="audio"></audio>
 
@@ -68,14 +74,21 @@ numbers.forEach(n=>{
 // ===== Words 50 par niveau =====
 const words={ "A1":[], "A2":[], "B1":[], "B2":[] };
 
-// 50 mots factices par niveau (يمكنك تغييرها لاحقاً)
+const sampleWords = {
+    "A1":["pomme","chat","chien","maison","voiture","livre","fleur","soleil","eau","lait","pain","fromage","ami","mère","père","frère","soeur","ecole","stylo","chaise","table","porte","fenetre","robe","chemise","chaussure","ville","route","arbre","oiseau","poisson","montagne","plage","neige","lune","étoile","temps","jour","nuit","heure","minute","année","printemps","été","automne","hiver","jouet","ballon","crayon","ordinateur","téléphone"],
+    "A2":["fenêtre","clé","vélo","horloge","valise","stylo","ordinateur","plante","chambre","cuisine","salon","chaise","table","lit","canapé","rideau","télévision","radio","musique","chanson","film","photo","journal","magazine","vérité","secret","cadeau","fête","anniversaire","voyage","avion","train","bus","bateau","mer","rivière","montagne","forêt","animal","oiseau","poisson","insecte","fruit","légume","repas","dessert","boisson","école","cours","examen","professeur","étudiant","livre","histoire"],
+    "B1":["ordinateur","internet","logiciel","application","réseau","serveur","programmation","algorithme","données","base","tableau","fonction","variable","boucle","condition","classe","objet","héritage","interface","module","package","bibliothèque","compilation","erreur","débogage","test","projet","développement","site","application","réalité","virtuelle","simulation","graphique","animation","son","vidéo","lecture","écriture","communication","messagerie","email","chat","réunion","présentation","diapositive","diagramme","statistique","analyse","rapport","documentation","version","mise à jour"],
+    "B2":["économie","politique","démocratie","république","parlement","loi","justice","élection","vote","parti","gouvernement","ministre","président","débat","politicien","budget","finance","impôt","taxe","entreprise","industrie","commerce","exportation","importation","marché","consommateur","production","emploi","chômage","salarié","syndicat","contrat","travail","salaire","formation","recherche","innovation","technologie","environnement","écologie","climat","pollution","énergie","renouvelable","transport","mobilité","ville","campagne","culture","art","musique","cinéma"]
+};
+
+// ملأ الكلمات مع ملفات وهمية
 ["A1","A2","B1","B2"].forEach(level=>{
-    for(let i=1;i<=50;i++){
+    for(let i=0;i<50;i++){
         words[level].push({
-            word: level+"mot"+i,
-            image: "images/words/"+level.toLowerCase()+"_"+i+".png",
-            sound: "sounds/words/"+level.toLowerCase()+"_"+i+".mp3",
-            phrase: "Ceci est le mot "+level+" mot"+i
+            word: sampleWords[level][i],
+            image: "images/words/"+level.toLowerCase()+"_"+(i+1)+".png",
+            sound: "sounds/words/"+level.toLowerCase()+"_"+(i+1)+".mp3",
+            phrase: "Voici le mot "+sampleWords[level][i]
         });
     }
 });
@@ -99,7 +112,7 @@ for(const level in words){
 function startGame(){
     const gameArea=document.getElementById("game-area");
     gameArea.innerHTML="";
-    let sample=words["A1"].slice(0,5);
+    let sample = words["A1"].slice(0,5);
     sample.forEach(w=>{
         let btn=document.createElement("button");
         btn.textContent=w.word;
@@ -125,7 +138,7 @@ function showSection(id){
     document.getElementById(id).classList.add("active");
 }
 
-// ===== Affichage تلقائي =====
+// ===== Affichage افتراضي =====
 showSection('letters');
 </script>
 
